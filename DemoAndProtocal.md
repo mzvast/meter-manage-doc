@@ -68,18 +68,16 @@ rap是我们团队前后端接口用的mock平台，由于最近阿里服务器�
 	}</pre>
 #  比对信息 #
 
-## 发送（浏览器）    
+## 发送（浏览器）    （V25.1更新）
 - 发送内容
     <pre>
     {
       "type": "info",
       "data": {
         "file_info": [{
-          "cpu_id": 1,
-          "md5": "d9fc6d737aea3345f681f24c8a2bb07c"
+          "cpu_id": 1          
         }, {
-          "cpu_id": 2,
-          "md5": "d9fc6d737aea3345f681f24c8a2bb07d"
+          "cpu_id": 2
         }],
         "cpu_info": [{
           "cpu_id": 1,
@@ -195,7 +193,26 @@ rap是我们团队前后端接口用的mock平台，由于最近阿里服务器�
     - 表号和表地址长度不对;
     - 表位超出范围等。
 
-#  发送HEX文件
+#  发送HEX文件(V25.1更新)
+##  发送文件信息（浏览器）
+   <pre>{
+    "type": "file",
+    "extname":"hex",
+    "md5": "d9fc6d737aea3345f681f24c8a2bb07c"
+}</pre>
+##  回复（客户端）
+如果客户端支持该格式，并且后缀名和md5信息完整，则回复：
+   <pre>{
+    "type": "file",
+    "state":"ready"
+}</pre>
+否则，回复：
+   <pre>{
+    "type": "file",
+    "state":"fail",
+    "reason":"extname undefine/md5 undefine/unknown extname（错误原因的表示，仅供参考，可以自己定，中文亦可）"
+}</pre>
+收到该信息浏览器会终止测试，让用户检查文件输入是否正确。
 ##  发送（浏览器）
 使用二进制流发送文件，对于多CPU电表则分多次发送hex文件，每次只能发送一个文件。
 
@@ -285,6 +302,7 @@ rap是我们团队前后端接口用的mock平台，由于最近阿里服务器�
 ----------
 版本号 | 说明  
 :----|:--------
+V25.1|修改文件部分协议
 V25.0|HEX文件做完。流程优化。
 V24.0|Arg增加localStrorage记忆
 V24.0|HEX文件上传完成。
